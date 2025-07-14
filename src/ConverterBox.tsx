@@ -36,6 +36,13 @@ function ConverterBox() {
       setbasecr_value(Number((val / conversion_rate).toFixed(2)));
     }
   };
+  const handleswap = () => {
+    selectbase_cr(target_cr.code);
+    selecttarget_cr(base_cr.code);
+    setbasecr_value(target_cr.value);
+    settargetcr_value(base_cr.value);
+
+  };
   return (
     <VStack w={"full"} align={"center"} justify={"center"}>
       <Group attached>
@@ -45,6 +52,7 @@ function ConverterBox() {
           onChangeval={handlebasechange}
         />
         <InputList
+          setswap={(e) => selectbase_cr(e)}
           get_currency_value={(e) => selectbase_cr(e)}
           default_value={base_cr.code}
         />
@@ -55,6 +63,9 @@ function ConverterBox() {
         borderRadius={"50%"}
         my={"20px"}
         rotate={"90deg"}
+        transition={"all .2s ease"}
+        _hover={{ bg: "gray.400" , transform: "rotate(180deg)" }}
+        onClick={() => handleswap()}
       >
         <GoArrowSwitch />
       </Button>
@@ -66,6 +77,7 @@ function ConverterBox() {
           cr_code={target_cr.code}
         />
         <InputList
+         setswap={(e) => selecttarget_cr(e)}
           get_currency_value={(e) => selecttarget_cr(e)}
           default_value={target_cr.code}
         />

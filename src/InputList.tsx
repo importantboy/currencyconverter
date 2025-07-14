@@ -1,6 +1,6 @@
-import { Portal, Select, createListCollection } from "@chakra-ui/react";
+import { Portal, Select, createListCollection, type JsxElement } from "@chakra-ui/react";
 import { fetchcurrencies } from "./Api/CurrencyListApi";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, type AnyDataTag } from "@tanstack/react-query";
 import getSymbolFromCurrency from "currency-symbol-map";
 interface Icurrency {
   code: string;
@@ -10,8 +10,9 @@ interface Icurrency {
 interface Proptype {
   get_currency_value: (e: string) => void;
   default_value: string;
+  setswap : (e : any) => void;
 }
-export const InputList = ({ get_currency_value, default_value }: Proptype) => {
+export const InputList = ({ get_currency_value, default_value  , setswap}: Proptype) => {
   const { data: serverdata, isFetched } = useQuery({
     queryKey: ["currencylist"],
     queryFn: fetchcurrencies,
@@ -30,17 +31,19 @@ export const InputList = ({ get_currency_value, default_value }: Proptype) => {
     itemToString: (item: Icurrency) => item.name,
     itemToValue: (item: Icurrency) => item.code,
   });
-
+   const handleswap = (e : any) => {
+    get_currency_value(e.value);
+    setswap(e.value);
+   }
   return (
     <Select.Root
-      onSelect={(e) => get_currency_value(e.value)}
+      onSelect={handleswap}
       collection={currencies}
       size="md"
       width="300px"
       colorPalette={"yellow"}
       variant={"subtle"}
-      defaultValue={[default_value]}
-      //   onValueChange={(e) => console.log(e)}
+      value={[default_value]}
     >
       <Select.HiddenSelect />
       <Select.Control>
