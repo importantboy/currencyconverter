@@ -1,0 +1,28 @@
+@import url("https://fonts.googleapis.com/css2?family=Bitcount+Grid+Double:wght@100..900&family=Inconsolata:wght@200..900&family=Tektur:wght@400..900&display=swap");
+.heading-font {
+  font-family: "Bitcount Grid Double", system-ui;
+  font-optical-sizing: auto;
+  font-style: normal;
+  font-weight: 500;
+  font-variation-settings:
+    "slnt" 0,
+    "CRSV" 0.5,
+    "ELSH" 0,
+    "ELXP" 0;
+  color: black;
+}
+* {
+  font-family: "Inconsolata", monospace;
+}
+.regular-font {
+  font-family: "Inconsolata", monospace;
+  font-weight: 400;
+  font-size: 20px;
+}
+
+.header-font {
+  font-family: "Tektur", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+  font-variation-settings: "wdth" 100;
+}
