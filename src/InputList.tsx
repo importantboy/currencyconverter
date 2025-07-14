@@ -1,6 +1,6 @@
-import { Portal, Select, createListCollection, type JsxElement } from "@chakra-ui/react";
+import { Portal, Select, createListCollection } from "@chakra-ui/react";
 import { fetchcurrencies } from "./Api/CurrencyListApi";
-import { useQuery, type AnyDataTag } from "@tanstack/react-query";
+import { useQuery} from "@tanstack/react-query";
 import getSymbolFromCurrency from "currency-symbol-map";
 interface Icurrency {
   code: string;

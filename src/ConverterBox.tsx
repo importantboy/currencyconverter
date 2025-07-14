@@ -20,6 +20,7 @@ function ConverterBox() {
     queryFn: () => convertCurrencies(base_cr.code, target_cr.code),
     staleTime: 1000 * 60 * 60, // 1 hour
     refetchOnWindowFocus: false,
+    refetchOnReconnect: true,
   });
 
   const conversion_rate = isFetched && data?.conversion_rate;
