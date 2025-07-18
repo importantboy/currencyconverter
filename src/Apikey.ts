@@ -1,1 +1,1 @@
-export const Apikey : string = "1fdc3d3e1263f2ec507f9336";
+export const Apikey : string = "2da4486b5bc5db69ee46dcb7";

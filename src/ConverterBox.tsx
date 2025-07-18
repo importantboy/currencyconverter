@@ -16,22 +16,32 @@ function ConverterBox() {
   } = useCrStore((state) => state);
 
   const { data, isFetched } = useQuery({
-    queryKey: ["set_currencies", base_cr.code, target_cr.code],
+    queryKey: ["set_currencies", base_cr, target_cr],
     queryFn: () => convertCurrencies(base_cr.code, target_cr.code),
     staleTime: 1000 * 60 * 60, // 1 hour
     refetchOnWindowFocus: false,
     refetchOnReconnect: true,
   });
 
+  //  return;
   const conversion_rate = isFetched && data?.conversion_rate;
 
-  const handlebasechange = (val: number) => {
+
+  const handlebasechange = (val: number | string | any) => {
+     if(val === ''){
+        settargetcr_value(Number(''));
+        setbasecr_value(Number(''));
+     }
     setbasecr_value(val);
     if (conversion_rate) {
       settargetcr_value(Number((val * conversion_rate).toFixed(2)));
     }
   };
-  const handletargetchange = (val: number) => {
+  const handletargetchange = (val: number | string ) => {
+     if(val === ''){
+        settargetcr_value(Number(''));
+        setbasecr_value(Number(''));
+     }
     settargetcr_value(val);
     if (conversion_rate) {
       setbasecr_value(Number((val / conversion_rate).toFixed(2)));
@@ -42,18 +52,25 @@ function ConverterBox() {
     selecttarget_cr(base_cr.code);
     setbasecr_value(target_cr.value);
     settargetcr_value(base_cr.value);
-
+    // refetch();
   };
   return (
     <VStack w={"full"} align={"center"} justify={"center"}>
-      <Group attached>
+      <Group>
         <CurrencyInput
           cr_code={base_cr.code}
           value={base_cr.value}
           onChangeval={handlebasechange}
         />
         <InputList
-          setswap={(e) => selectbase_cr(e)}
+          setswap={(e) => {
+            selectbase_cr(e);
+            if (conversion_rate) {
+              settargetcr_value(
+                (Number(base_cr.value) * conversion_rate).toFixed(2)
+              );
+            }
+          }}
           get_currency_value={(e) => selectbase_cr(e)}
           default_value={base_cr.code}
         />
@@ -65,20 +82,28 @@ function ConverterBox() {
         my={"20px"}
         rotate={"90deg"}
         transition={"all .2s ease"}
-        _hover={{ bg: "gray.400" , transform: "rotate(180deg)" }}
+        _hover={{ bg: "gray.400", transform: "rotate(180deg)" }}
         onClick={() => handleswap()}
       >
         <GoArrowSwitch />
       </Button>
 
-      <Group attached>
+      <Group>
         <CurrencyInput
           onChangeval={handletargetchange}
           value={target_cr.value}
           cr_code={target_cr.code}
         />
         <InputList
-         setswap={(e) => selecttarget_cr(e)}
+          setswap={(e) => {
+            selecttarget_cr(e);
+            if (conversion_rate) {
+                console.log('working')
+              setbasecr_value(
+                (Number(target_cr.value) / conversion_rate).toFixed(2)
+              );
+            }
+          }}
           get_currency_value={(e) => selecttarget_cr(e)}
           default_value={target_cr.code}
         />

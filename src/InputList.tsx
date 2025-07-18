@@ -12,7 +12,7 @@ interface Proptype {
   default_value: string;
   setswap : (e : any) => void;
 }
-export const InputList = ({ get_currency_value, default_value  , setswap}: Proptype) => {
+export const InputList = ({ get_currency_value, default_value , setswap }: Proptype) => {
   const { data: serverdata, isFetched } = useQuery({
     queryKey: ["currencylist"],
     queryFn: fetchcurrencies,
@@ -62,7 +62,6 @@ export const InputList = ({ get_currency_value, default_value  , setswap}: Propt
                 <Select.Item
                   item={cr.code}
                   key={index}
-                  onChange={() => console.log("its working")}
                   fontSize={"15px"}
                 >
                   <b>
