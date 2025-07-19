@@ -1,22 +1,23 @@
 import { Button, Group, VStack } from "@chakra-ui/react";
-import { InputList } from "./InputList";
-import { CurrencyInput } from "./CurrencyInput";
+import { SelectCurrency } from "./SelectCurrency";
+import { CurrencyInput as Inputbox } from "./CurrencyInput";
 import { GoArrowSwitch } from "react-icons/go";
 import { useCrStore } from "./store/CurrencyStore";
 import { useQuery } from "@tanstack/react-query";
 import { convertCurrencies } from "./Api/CurrencyListApi";
+import { useEffect } from "react";
 function ConverterBox() {
   const {
     base_cr,
     target_cr,
-    selectbase_cr,
-    selecttarget_cr,
     setbasecr_value,
     settargetcr_value,
+    selectbase_cr,
+    selecttarget_cr,
   } = useCrStore((state) => state);
 
   const { data, isFetched } = useQuery({
-    queryKey: ["set_currencies", base_cr, target_cr],
+    queryKey: ["set_currencies", target_cr.code, base_cr.code],
     queryFn: () => convertCurrencies(base_cr.code, target_cr.code),
     staleTime: 1000 * 60 * 60, // 1 hour
     refetchOnWindowFocus: false,
@@ -25,54 +26,53 @@ function ConverterBox() {
 
   //  return;
   const conversion_rate = isFetched && data?.conversion_rate;
+  console.log(base_cr.value);
 
+  useEffect(() => {
+    setbasecr_value("1");
+  }, []);
 
-  const handlebasechange = (val: number | string | any) => {
-     if(val === ''){
-        settargetcr_value(Number(''));
-        setbasecr_value(Number(''));
-     }
-    setbasecr_value(val);
+  useEffect(() => {
+     settargetcr_value("loading")
+    if (isFetched && conversion_rate) {
+      settargetcr_value(conversion_rate.toFixed(2));
+    }
+  }, [isFetched, conversion_rate]);
+
+  const handleInputChangeOfBase = (e: any) => {
+    setbasecr_value(e);
     if (conversion_rate) {
-      settargetcr_value(Number((val * conversion_rate).toFixed(2)));
+      const conversion = e * conversion_rate;
+      settargetcr_value(conversion.toFixed(2));
     }
   };
-  const handletargetchange = (val: number | string ) => {
-     if(val === ''){
-        settargetcr_value(Number(''));
-        setbasecr_value(Number(''));
-     }
-    settargetcr_value(val);
+
+  const handleInputChangeOfTarget = (e: any) => {
+    settargetcr_value(e);
     if (conversion_rate) {
-      setbasecr_value(Number((val / conversion_rate).toFixed(2)));
+      const conversion = e / conversion_rate;
+      setbasecr_value(conversion.toFixed(2));
     }
   };
-  const handleswap = () => {
+
+  const handleSwap = () => {
+    setbasecr_value(target_cr.value.toString());
+    settargetcr_value(base_cr.value.toString());
+
     selectbase_cr(target_cr.code);
     selecttarget_cr(base_cr.code);
-    setbasecr_value(target_cr.value);
-    settargetcr_value(base_cr.value);
-    // refetch();
   };
   return (
     <VStack w={"full"} align={"center"} justify={"center"}>
       <Group>
-        <CurrencyInput
-          cr_code={base_cr.code}
-          value={base_cr.value}
-          onChangeval={handlebasechange}
+        <Inputbox
+          value={base_cr.value.toString()}
+          ValueChangeCallback={handleInputChangeOfBase}
+           currencyCode={base_cr.code}
         />
-        <InputList
-          setswap={(e) => {
-            selectbase_cr(e);
-            if (conversion_rate) {
-              settargetcr_value(
-                (Number(base_cr.value) * conversion_rate).toFixed(2)
-              );
-            }
-          }}
-          get_currency_value={(e) => selectbase_cr(e)}
-          default_value={base_cr.code}
+        <SelectCurrency
+          SelectChangeCurrency={(e) => selectbase_cr(e.value)}
+          defaultCurrency={base_cr.code}
         />
       </Group>
       <Button
@@ -83,29 +83,20 @@ function ConverterBox() {
         rotate={"90deg"}
         transition={"all .2s ease"}
         _hover={{ bg: "gray.400", transform: "rotate(180deg)" }}
-        onClick={() => handleswap()}
+        onClick={handleSwap}
       >
         <GoArrowSwitch />
       </Button>
 
       <Group>
-        <CurrencyInput
-          onChangeval={handletargetchange}
-          value={target_cr.value}
-          cr_code={target_cr.code}
+        <Inputbox
+          value={target_cr.value.toString()}
+          ValueChangeCallback={handleInputChangeOfTarget}
+          currencyCode={target_cr.code}
         />
-        <InputList
-          setswap={(e) => {
-            selecttarget_cr(e);
-            if (conversion_rate) {
-                console.log('working')
-              setbasecr_value(
-                (Number(target_cr.value) / conversion_rate).toFixed(2)
-              );
-            }
-          }}
-          get_currency_value={(e) => selecttarget_cr(e)}
-          default_value={target_cr.code}
+        <SelectCurrency
+          SelectChangeCurrency={(e) => selecttarget_cr(e.value)}
+          defaultCurrency={target_cr.code}
         />
       </Group>
     </VStack>

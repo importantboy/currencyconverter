@@ -10,13 +10,13 @@ interface CrState {
   target_cr: Icr;
   selectbase_cr: (selected_cr: string) => void;
   selecttarget_cr: (selected_cr: string) => void;
-  setbasecr_value: (value: number | string) => void;
-  settargetcr_value: (value: number | string) => void;
+  setbasecr_value: (value: string) => void;
+  settargetcr_value: (value: string) => void;
 }
 
 export const useCrStore = create<CrState>((set) => ({
-  base_cr: { code: "USD", value: 0},
-  target_cr: { code: "INR", value: 0},
+  base_cr: { code: "USD", value: ''},
+  target_cr: { code: "INR", value: ''},
  
   selectbase_cr: (selected_code) =>
     set((state) => ({

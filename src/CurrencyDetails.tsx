@@ -11,15 +11,15 @@ function CurrencyDetails() {
     queryFn: () => convertCurrencies(base_cr.code, target_cr.code, "1"),
     refetchOnWindowFocus : false ,
   });
-  console.log(data);
+  // console.log(data);
   const conversion_result = isFetched && data?.conversion_result;
   return (
     <Box
       w={"full"}
       display={"flex"}
-      justifyContent={"flex-start"}
+      justifyContent={"center"}
       flexDir={"column"}
-      alignItems={"flex-start"}
+      alignItems={"center"}
       height={"100%"}
       textAlign={"center"} // corrected this prop
       p={"4"}
@@ -28,9 +28,9 @@ function CurrencyDetails() {
         {1} {getSymbolFromCurrency(base_cr.code)}
       </Heading>
       {/* <Text>Country: {}</Text> */}
-      <Text>
+      <Text fontSize={'25px'} fontWeight={'800'}>
         Exchange Rate: 1 {getSymbolFromCurrency(base_cr.code)} = {" "}
-        {isFetching ? "loading" : conversion_result.toFixed(2) }{" "}
+        {isFetching ? "loading" : isFetched && conversion_result?.toFixed(2) }{" "}
         {getSymbolFromCurrency(target_cr.code)}
       </Text>
     </Box>

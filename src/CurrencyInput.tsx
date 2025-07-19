@@ -1,24 +1,29 @@
 import { Input, InputGroup } from "@chakra-ui/react";
 import getSymbolFromCurrency from "currency-symbol-map";
 
-interface PropType {
-  cr_code: string;
-  value: number | string | any;
-  onChangeval: (value: number) => void;
+interface IPropType {
+  value: string;
+  ValueChangeCallback: (e: any) => void;
+  currencyCode: string;
 }
 
-export const CurrencyInput = ({ cr_code, value, onChangeval }: PropType) => {
+export const CurrencyInput = ({
+  value,
+  ValueChangeCallback,
+  currencyCode,
+}: IPropType) => {
+  const handlechange = (e: any) => {
+    ValueChangeCallback(e.target.value);
+  };
+
   return (
-    <InputGroup startElement={getSymbolFromCurrency(cr_code)}>
+    <InputGroup startElement={getSymbolFromCurrency(currencyCode)}>
       <Input
         placeholder="1.00"
-        variant={"subtle"}
-        value={value === 0 ? "" : value}
-        type="number"
-        onChange={(e) => {
-          const val = e.target.value;
-          onChangeval(val === "" ? Number("") : Number(val));
-        }}
+        variant={"flushed"}
+        type="text"
+        value={value}
+        onChange={handlechange}
       />
     </InputGroup>
   );
