@@ -27,7 +27,6 @@ function ConverterBox() {
     // enabled: !!base_cr.code && !!target_cr.code,
   });
   const conversion_rate = isFetched && data?.conversion_rate;
-  console.log(isFetched && data);
   // swapping the currency
 
   const handleSwap = () => {
@@ -49,7 +48,6 @@ function ConverterBox() {
     settargetcr_value("loading");
     if (isFetched && conversion_rate) {
       const conversion = Number(base_cr.value) * conversion_rate;
-      console.log(conversion);
       settargetcr_value(conversion.toFixed(2));
     }
   }, [isFetched, conversion_rate]);
