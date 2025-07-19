@@ -26,8 +26,6 @@ function ConverterBox() {
 
   //  return;
   const conversion_rate = isFetched && data?.conversion_rate;
-  console.log(base_cr.value);
-
   useEffect(() => {
     setbasecr_value("1");
   }, []);
