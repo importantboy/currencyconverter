@@ -33,7 +33,8 @@ function ConverterBox() {
   useEffect(() => {
      settargetcr_value("loading")
     if (isFetched && conversion_rate) {
-      settargetcr_value(conversion_rate.toFixed(2));
+       const conversion = Number(base_cr.value) * conversion_rate;
+      settargetcr_value(conversion.toFixed(2));
     }
   }, [isFetched, conversion_rate]);
 
