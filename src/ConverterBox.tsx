@@ -3,10 +3,12 @@ import { SelectCurrency } from "./SelectCurrency";
 import { CurrencyInput as Inputbox } from "./CurrencyInput";
 import { GoArrowSwitch } from "react-icons/go";
 import { useCrStore } from "./store/CurrencyStore";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { convertCurrencies } from "./Api/CurrencyListApi";
 import { useEffect } from "react";
+
 function ConverterBox() {
+  const queryClient = useQueryClient();
   const {
     base_cr,
     target_cr,
@@ -22,18 +24,32 @@ function ConverterBox() {
     staleTime: 1000 * 60 * 60, // 1 hour
     refetchOnWindowFocus: false,
     refetchOnReconnect: true,
+    // enabled: !!base_cr.code && !!target_cr.code,
   });
-
-  //  return;
   const conversion_rate = isFetched && data?.conversion_rate;
+  console.log(isFetched && data);
+  // swapping the currency
+
+  const handleSwap = () => {
+    selecttarget_cr(base_cr.code);
+    selectbase_cr(target_cr.code);
+
+    setTimeout(() => {
+      queryClient.invalidateQueries({
+        queryKey: ["set_currencies"],
+      });
+    }, 10);
+  };
+
   useEffect(() => {
     setbasecr_value("1");
   }, []);
 
   useEffect(() => {
-     settargetcr_value("loading")
+    settargetcr_value("loading");
     if (isFetched && conversion_rate) {
-       const conversion = Number(base_cr.value) * conversion_rate;
+      const conversion = Number(base_cr.value) * conversion_rate;
+      console.log(conversion);
       settargetcr_value(conversion.toFixed(2));
     }
   }, [isFetched, conversion_rate]);
@@ -54,20 +70,13 @@ function ConverterBox() {
     }
   };
 
-  const handleSwap = () => {
-    setbasecr_value(target_cr.value.toString());
-    settargetcr_value(base_cr.value.toString());
-
-    selectbase_cr(target_cr.code);
-    selecttarget_cr(base_cr.code);
-  };
   return (
     <VStack w={"full"} align={"center"} justify={"center"}>
       <Group>
         <Inputbox
           value={base_cr.value.toString()}
           ValueChangeCallback={handleInputChangeOfBase}
-           currencyCode={base_cr.code}
+          currencyCode={base_cr.code}
         />
         <SelectCurrency
           SelectChangeCurrency={(e) => selectbase_cr(e.value)}
