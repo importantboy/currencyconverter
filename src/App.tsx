@@ -11,8 +11,8 @@ function App() {
       <MainHeading />
       <Box
         h={"50vh"}
-         flexDir={'row'}
-         display={'flex'}
+        display={'flex'}
+         flexDirection={{smToMd : 'column'}}
       >
         <ConverterBox />
         <CurrencyDetails />

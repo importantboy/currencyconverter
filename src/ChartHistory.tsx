@@ -13,11 +13,11 @@ import {
 } from "recharts";
 
 const generateFullYearDates = () => {
-  const startYear = 2005;
+  const startYear = 2020;
   const currentYear = new Date().getFullYear();
   const dates = [];
   for (let i = startYear; i <= currentYear; i++) {
-    dates.push(`${i}/01/01`);
+    dates.push(`${i}/04/04`);
   }
   return dates;
 };
@@ -27,7 +27,8 @@ const QuerytoFetchCurrencies = () => {
   return useQueries({
     queries: yearWithDates.map((item) => ({
       queryKey: ["rate", item],
-      queryFn: () => getCurrencyHistory("usd", item),
+      queryFn: () => getCurrencyHistory("USD", item),
+      staleTime: 1000 * 60 * 60, // 1 hour
     })),
   });
 };
@@ -43,12 +44,12 @@ function ChartHistory() {
     .filter((item) => item.isSuccess && item.data)
     .map((item) => {
       return {
-        name: item.data?.fullYearwithDateandMonth,
-        uv: item.data?.res?.conversion_rates.INR,
+        name: item.data?.fullYearwithDateandMonth.slice(0, 4),
+        INR: item.data?.res?.conversion_rates?.INR,
       };
     });
 
-  console.log(getQueryData);
+  //   console.log(queryData);
 
   return (
     <Box
@@ -78,12 +79,11 @@ function ChartHistory() {
             <XAxis dataKey="name" />
             <YAxis />
             <Tooltip />
-            <Area
-              type="monotone"
-              dataKey="uv"
-              stroke="#8884d8"
-              fill="#8884d8"
-            />
+
+            <Area dataKey={"KRW"} stackId={"1"} />
+            <Area dataKey={"SKW"} stackId={"1"} fill="#ff5d3b" />
+
+            <Area type="bump" dataKey="INR" stroke="#8884d8" fill="#8884d8" />
           </AreaChart>
         </ResponsiveContainer>
       )}
