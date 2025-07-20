@@ -3,7 +3,7 @@ import ConverterBox from "./ConverterBox";
 import CurrencyDetails from "./CurrencyDetails";
 import MainHeading from "./Heading";
 import Navbar from "./Navbar";
-import { Box, Button } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 function App() {
   return (
     <Box>
