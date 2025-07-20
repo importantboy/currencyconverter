@@ -1,9 +1,9 @@
+import ChartHistory from "./ChartHistory";
 import ConverterBox from "./ConverterBox";
 import CurrencyDetails from "./CurrencyDetails";
 import MainHeading from "./Heading";
 import Navbar from "./Navbar";
-import { Box } from "@chakra-ui/react";
-
+import { Box, Button } from "@chakra-ui/react";
 function App() {
   return (
     <Box>
@@ -13,15 +13,13 @@ function App() {
         h={"50vh"}
          flexDir={'row'}
          display={'flex'}
-        sm={{
-          flexDir: "column",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
       >
         <ConverterBox />
         <CurrencyDetails />
       </Box>
+       <Box display={'flex'} justifyContent={'center'}>
+          <ChartHistory />
+        </Box>
     </Box>
   );
 }

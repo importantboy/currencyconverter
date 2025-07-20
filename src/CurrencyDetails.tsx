@@ -9,7 +9,7 @@ function CurrencyDetails() {
   const { data, isFetched, isFetching } = useQuery({
     queryKey: ["set_currencies" , base_cr.code , target_cr.code],
     queryFn: () => convertCurrencies(base_cr.code, target_cr.code, "1"),
-    refetchOnWindowFocus : false ,
+    refetchOnWindowFocus : false ,  
   });
   // console.log(data);
   const conversion_result = isFetched && data?.conversion_result;

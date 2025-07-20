@@ -17,3 +17,18 @@ export const convertCurrencies = async (
   );
   return await apidata.json();
 };
+
+export const getCurrencyHistory = async (
+  currency: string,
+  fullYearwithDateandMonth: string
+) => {
+
+  const apidata = await fetch(
+    `https://v6.exchangerate-api.com/v6/${Apikey}/history/${currency}/${fullYearwithDateandMonth}`
+  );
+ const res = await apidata.json();
+ return {
+   fullYearwithDateandMonth , 
+   res
+ }
+};

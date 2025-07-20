@@ -61,7 +61,7 @@ function ConverterBox() {
   };
 
   const handleInputChangeOfTarget = (e: any) => {
-    settargetcr_value(e);
+    settargetcr_value(e); 
     if (conversion_rate) {
       const conversion = e / conversion_rate;
       setbasecr_value(conversion.toFixed(2));
