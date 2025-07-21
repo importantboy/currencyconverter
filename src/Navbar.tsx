@@ -29,7 +29,6 @@ function Navbar() {
         fontSize={'18px'}
       >
         <Link color={"black"}>home</Link>
-        <Link color={"black"}>currency lists</Link>
       </HStack>
     </Box>
   );
