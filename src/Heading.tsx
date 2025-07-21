@@ -5,7 +5,7 @@ function MainHeading() {
           py={'8'}
         as={"h1"}
         className="header-font"
-        fontSize={"4xl"}
+        fontSize={{base : 'xl' , md : 'lg' , lg : '4xl'}}
         textAlign={"center"}    
          textTransform={'capitalize'}
         lineHeight={"normal"}
