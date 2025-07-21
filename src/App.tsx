@@ -12,7 +12,10 @@ function App() {
       <Box
         h={"50vh"}
         display={'flex'}
-         flexDirection={{smToMd : 'column'}}
+         flexDirection={{base : "column" , md : 'row'}}
+         shadow={'md'}
+         mx={'5'}
+         divideX={'1px'}
       >
         <ConverterBox />
         <CurrencyDetails />

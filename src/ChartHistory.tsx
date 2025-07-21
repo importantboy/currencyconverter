@@ -59,7 +59,7 @@ function ChartHistory() {
       flexDir={"column"}
       justifyContent={"center"}
     >
-      <HStack justify={"center"}>
+      <HStack justify={"center"} my={'5'}>
         <Button onClick={handleChartData}>chart history </Button>
       </HStack>
       {displayChart && (

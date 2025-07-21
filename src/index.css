@@ -14,11 +14,11 @@
 * {
   font-family: "Inconsolata", monospace;
 }
-.regular-font {
+/* .regular-font {
   font-family: "Inconsolata", monospace;
   font-weight: 400;
   font-size: 20px;
-}
+} */
 
 .header-font {
   font-family: "Tektur", sans-serif;

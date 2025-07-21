@@ -24,6 +24,7 @@ export const CurrencyInput = ({
         type="text"
         value={value}
         onChange={handlechange}
+         minW={'60%'}
       />
     </InputGroup>
   );

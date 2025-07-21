@@ -38,7 +38,7 @@ export const SelectCurrency = ({ SelectChangeCurrency , defaultCurrency }: Propt
        value={[defaultCurrency]}
       collection={currencies}
       size="md"
-      width="300px"
+       w={'100%'}
       colorPalette={"yellow"}
       variant={"outline"}
     >

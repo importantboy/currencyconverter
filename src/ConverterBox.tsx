@@ -69,7 +69,7 @@ function ConverterBox() {
   };
 
   return (
-    <VStack w={"full"} align={"center"} justify={"center"}>
+    <VStack w={"full"} align={"center"} justify={"center"} p={'4'}>
       <Group>
         <Inputbox
           value={base_cr.value.toString()}
