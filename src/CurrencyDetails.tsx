@@ -24,12 +24,12 @@ function CurrencyDetails() {
       textAlign={"center"} // corrected this prop
       p={"4"}
     >
-      <Heading as={"h2"} fontSize={"40px"}>
-        {1} {getSymbolFromCurrency(base_cr.code)}
+      <Heading as={"h2"} fontSize={"40px"} color={'yellow.600'}>
+        {1}{getSymbolFromCurrency(base_cr.code)}
       </Heading>
       {/* <Text>Country: {}</Text> */}
-      <Text fontSize={'25px'} fontWeight={'800'}>
-        Exchange Rate: 1 {getSymbolFromCurrency(base_cr.code)} = {" "}
+      <Text fontSize={{base : '18px' ,  md : '20px' , lg : '24px'}} fontWeight={'400'}>
+        Exchange Rate: 1{getSymbolFromCurrency(base_cr.code)} = {" "}
         {isFetching ? "loading" : isFetched && conversion_result?.toFixed(2) }{" "}
         {getSymbolFromCurrency(target_cr.code)}
       </Text>
